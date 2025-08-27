@@ -64,7 +64,7 @@ static struct timer		timer_autodose		= NEVER;
 /* Local Prototypes							      */
 /******************************************************************************/
 
-static void		litterlanguage_cleanup	(unsigned char		wet);
+void		litterlanguage_cleanup	(unsigned char		wet);
 static void		req_instruction		(struct instruction	const *instruction);
 static unsigned char	get_instruction		(struct instruction	*instruction);
 static void		exe_instruction		(void);
@@ -431,7 +431,7 @@ void heatsensor_event (unsigned char detected)
 /* Local Implementations						      */
 /******************************************************************************/
 
-static void litterlanguage_cleanup (unsigned char wet)
+void litterlanguage_cleanup (unsigned char wet)
 {
 	extern const struct instruction	cleanupprogram[];
 	if (ins_state == STATE_IDLE) {

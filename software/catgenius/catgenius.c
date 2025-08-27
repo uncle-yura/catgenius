@@ -29,6 +29,7 @@
 
 #ifdef HAS_COMMANDLINE
 #include "../common/cmdline.h"
+#include "cmdline_litterlanguage.h"
 #endif /* HAS_COMMANDLINE */
 
 #ifdef HAS_BLUETOOTH
@@ -54,7 +55,15 @@ const struct command	commands[] = {
 	{"?", help},
 	{"help", help},
 	{"echo", echo},
-	{"", NULL}
+   	{"dry_wash", dry_wash},
+  	{"wet_wash", wet_wash},
+    {"cleanup", dry_cleanup},
+  	{"drying", wet_cleanup},
+  	{"pause", pause_wash},
+   	{"stop", stop_wash},
+   	{"status", status},
+    {"set_mode", set_auto_mode},
+  	{"", NULL}
 };
 #endif /* HAS_COMMANDLINE */
 

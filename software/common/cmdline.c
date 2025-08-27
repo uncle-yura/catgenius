@@ -32,7 +32,7 @@
 
 extern const struct command	commands[];
 static char			linebuffer[LINEBUFFER_MAX];
-static unsigned char		localecho = 1;
+static unsigned char		localecho = 0;
 
 
 /******************************************************************************/

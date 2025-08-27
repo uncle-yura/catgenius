@@ -77,7 +77,6 @@ static unsigned char	error_nr	= 0;
 /* Local Prototypes							      */
 /******************************************************************************/
 
-static void	set_mode		(unsigned char mode);
 static void	update_display		(void);
 static void	process_button		(unsigned char	button_mask,
 					 unsigned char	down);
@@ -88,6 +87,9 @@ static void	start_long		(void);
 static void	both_short		(void);
 static void	both_long		(void);
 static void	update_autotimer	(unsigned char mode);
+unsigned char get_error     (void);
+void	      set_mode		(unsigned char mode);
+unsigned char get_mode      (void);
 
 
 /******************************************************************************/
@@ -262,7 +264,7 @@ void startbutton_event (unsigned char up)
 /*		- Initial revision.					      */
 /******************************************************************************/
 {
-	process_button (START_BUTTON, !up);
+	process_button (START_BUTTON, up); // Change to "!up" for mechanical buttons
 }
 /* startbutton_event */
 
@@ -275,7 +277,7 @@ void setupbutton_event (unsigned char up)
 /*		- Initial revision.					      */
 /******************************************************************************/
 {
-	process_button (SETUP_BUTTON, !up);
+	process_button (SETUP_BUTTON, up); // Change to "!up" for mechanical buttons 
 }
 /* setupbutton_event */
 
@@ -352,6 +354,8 @@ void litterlanguage_event (unsigned char event, unsigned char argument)
 		litterlanguage_pause(1);
 	}
 
+    if (argument) error_nr = event;
+    else error_nr = EVENT_LEVEL_CHANGED;
 
 	switch (event) {
 	case EVENT_LEVEL_CHANGED:
@@ -526,7 +530,21 @@ static void update_display (void)
 
 static void setup_short (void)
 {
-	switch (panel_mode) {
+	if (!litterlanguage_running()) {
+		/* Scoop-only program */
+		full_wash = 0;
+		/* Start the program */
+		litterlanguage_start(full_wash);
+		/* Update the state machine */
+		state = STATE_RUNNING;
+	} else
+		/* Stop the program, state machine will do the rest */
+		litterlanguage_stop();
+}
+
+static void setup_long (void)
+{
+    switch (panel_mode) {
 	default:
 		panel_mode = PANEL_AUTOMODE;
 	case PANEL_AUTOMODE:
@@ -555,10 +573,6 @@ static void setup_short (void)
 	}
 }
 
-static void setup_long (void)
-{
-}
-
 static void start_short (void)
 {
 	if (!litterlanguage_running()) {
@@ -575,16 +589,7 @@ static void start_short (void)
 
 static void start_long (void)
 {
-	if (!litterlanguage_running()) {
-		/* Scoop-only program */
-		full_wash = 0;
-		/* Start the program */
-		litterlanguage_start(full_wash);
-		/* Update the state machine */
-		state = STATE_RUNNING;
-	} else
-		/* Stop the program, state machine will do the rest */
-		litterlanguage_stop();
+
 }
 
 static void both_short (void)
@@ -631,4 +636,14 @@ static void update_autotimer (unsigned char mode)
 		timeoutnever(&autotimer);
 		break;
 	}
+}
+
+unsigned char get_error (void)
+{
+	return (error_nr);
+}
+
+unsigned char get_mode (void)
+{
+	return (auto_mode);
 }

@@ -12,5 +12,8 @@
 /* Generic */
 void		userinterface_init	(unsigned char	flags) ;
 void		userinterface_work	(void) ;
+unsigned char get_error         (void);
+unsigned char get_mode          (void);
+void          set_mode		    (unsigned char mode);
 
 #endif /* USERINTERFACE_H */
