@@ -12,6 +12,24 @@
             <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
+            <sourceRootList>
+                <sourceRootElem>..\..\..\..\..\..\..\Program Files (x86)\HI-TECH Software\PICC\9.83\include</sourceRootElem>
+                <sourceRootElem>..\common</sourceRootElem>
+                <sourceRootElem>.</sourceRootElem>
+            </sourceRootList>
+            <confList>
+                <confElem>
+                    <name>16F1939</name>
+                    <type>2</type>
+                </confElem>
+                <confElem>
+                    <name>16F877A</name>
+                    <type>2</type>
+                </confElem>
+            </confList>
+            <formatting>
+                <project-formatting-style>false</project-formatting-style>
+            </formatting>
         </data>
     </configuration>
 </project>

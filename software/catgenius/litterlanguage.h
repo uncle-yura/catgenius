@@ -55,6 +55,7 @@ void		litterlanguage_work	(void) ;
 
 /* Control */
 void		litterlanguage_start	(unsigned char	wet) ;
+void		litterlanguage_cleanup	(unsigned char		wet);
 unsigned char	litterlanguage_running	(void) ;
 void		litterlanguage_pause	(unsigned char	pause) ;
 unsigned char	litterlanguage_paused	(void) ;
